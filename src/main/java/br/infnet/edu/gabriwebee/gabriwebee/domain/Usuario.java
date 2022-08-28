@@ -13,6 +13,15 @@ public class Usuario {
     private String login;
     private String password;
 
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public Usuario() {
     }
 

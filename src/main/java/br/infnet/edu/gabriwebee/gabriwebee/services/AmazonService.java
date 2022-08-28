@@ -77,6 +77,7 @@ public class AmazonService {
     }
 
     public List<S3ObjectSummary> listObjects(String bucketName) {
+        //amazonS3.update
         ListObjectsV2Result listResults = amazonS3.listObjectsV2(bucketName);
         List<S3ObjectSummary> list = listResults.getObjectSummaries();
         return list;

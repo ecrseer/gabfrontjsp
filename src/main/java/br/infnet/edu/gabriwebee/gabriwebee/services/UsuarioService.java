@@ -11,4 +11,8 @@ public interface UsuarioService {
 
     @PostMapping("/cadastrar")
     public Usuario cadastrarUsuario(@RequestBody Usuario usuario);
+
+    @PostMapping("/logar")
+    public Usuario logarUsuario(@RequestBody Usuario usuario);
+
 }

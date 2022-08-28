@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/login")
@@ -35,6 +34,27 @@ public class UsuarioController {
         return "login/cadastrar";
     }
 
+    @GetMapping("/logar")
+    public String logar() {
+        return "login/login";
+    }
+
+    @PostMapping("/logar")
+    public String entrar(Usuario usuario, HttpSession session) {
+
+
+        try {
+            var result = usuarioService.logarUsuario(usuario);
+            System.out.println(result);
+            session.setAttribute("loggedUser", usuario);
+        } catch (Exception err) {
+
+            System.out.println(err);
+        }
+
+        return "login/login";
+    }
+
     @PostMapping("/cadastrar")
     public String publicarUsuario(Usuario usuario) {
         var result = usuarioService.cadastrarUsuario(usuario);
@@ -48,7 +68,7 @@ public class UsuarioController {
          * Usuario.setId(last.getId() + 1);
          * // Usuario Usuario;
          * Usuario UsuarioCadastrada = UsuarioService.addUsuario(Usuario);
-         * 
+         *
          * } catch (Exception ex) {
          * System.out.println(ex.getMessage());
          * }
