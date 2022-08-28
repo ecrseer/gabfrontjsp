@@ -23,6 +23,8 @@
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Entrar</button>
     </div>
+    <pre>${loggedUser}</pre>
+
 </form>
 </body>
 

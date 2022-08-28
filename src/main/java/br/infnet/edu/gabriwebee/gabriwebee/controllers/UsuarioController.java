@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -40,13 +41,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/logar")
-    public String entrar(Usuario usuario, HttpSession session) {
-
-
+    public String entrar(Usuario usuario, HttpServletRequest request) {
+        var reqSession = request.getSession();
         try {
             var result = usuarioService.logarUsuario(usuario);
             System.out.println(result);
-            session.setAttribute("loggedUser", usuario);
+            reqSession.setAttribute("loggedUser", result);
         } catch (Exception err) {
 
             System.out.println(err);
