@@ -38,6 +38,7 @@ public class AmazonService {
     }
 
     public List<Bucket> listOfBuckets() {
+        //Amazon
         // amazonS3.upload(presignedUrlUploadRequest)
         return amazonS3.listBuckets();
 
@@ -71,13 +72,10 @@ public class AmazonService {
 
     }
 
-    public String listBucketFiles(String bucketName) {
-        ObjectListing nsei = amazonS3.listObjects(bucketName, "");
-        return nsei.toString();
-    }
 
     public List<S3ObjectSummary> listObjects(String bucketName) {
         //amazonS3.update
+        //amazonS3.bucket
         ListObjectsV2Result listResults = amazonS3.listObjectsV2(bucketName);
         List<S3ObjectSummary> list = listResults.getObjectSummaries();
         return list;

@@ -1,0 +1,21 @@
+{
+  "Version": "2012-10-17",
+  "Id": "PolicyId2",
+  "Statement": [
+    {
+      "Sid": "AllowIPmix",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": [
+        "arn:aws:s3:::gabecrbuck",
+        "arn:aws:s3:::gabecrbuck/*"
+      ],
+      "Condition": {
+        "IpAddress": {
+          "aws:SourceIp": "xxxx:xxx:xxxx:xxxx::/64"
+        }
+      }
+    }
+  ]
+}

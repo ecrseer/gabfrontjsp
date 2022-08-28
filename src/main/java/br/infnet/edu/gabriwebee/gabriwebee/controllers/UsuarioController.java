@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/usuario")
 @EnableFeignClients()
 public class UsuarioController {
 
@@ -48,7 +48,6 @@ public class UsuarioController {
             System.out.println(result);
             reqSession.setAttribute("loggedUser", result);
         } catch (Exception err) {
-
             System.out.println(err);
         }
 

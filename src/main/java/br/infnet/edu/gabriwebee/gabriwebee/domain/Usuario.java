@@ -12,6 +12,15 @@ public class Usuario {
     private long idUsuario;
     private String login;
     private String password;
+    private String profilePic;
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
 
     @Override
     public String toString() {
