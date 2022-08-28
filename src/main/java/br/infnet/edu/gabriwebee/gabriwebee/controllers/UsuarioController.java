@@ -1,12 +1,15 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
+import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
 import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,18 +20,45 @@ import javax.servlet.http.HttpSession;
 public class UsuarioController {
 
     @Autowired
-    UsuarioService usuarioService;
+    UsuarioRepository usuarioRepository;
 
-    @GetMapping()
-    public String listar(Model model) {
+    @GetMapping("/perfil")
+    public String perfil(Model model) {
         /*
          * List<Usuario> UsuariosList = UsuarioService.listar();
          * model.addAttribute("UsuariosList", UsuariosList);
          * model.addAttribute("UsuariosListSize", UsuariosList.size());
          * System.out.println(UsuariosList);
          */
-        return "Usuarios/lista";
+        return "login/perfil";
     }
+
+    @PostMapping("/perfil")
+    public String editPerfil(@RequestPart(value = "bucketName") String bucketName,
+                             @RequestPart(value = "file") MultipartFile file, HttpServletRequest request) {
+        //var result = amazonService.uploadFile(bucketName, file);
+        //System.out.println(result);
+        var reqSession = request.getSession();
+
+        try {
+            Usuario user = (Usuario) reqSession.getAttribute("loggedUser");
+            System.out.println("edit per++" + user);
+
+        } catch (Exception err) {
+
+        }
+
+
+        /*
+         * List<Usuario> UsuariosList = UsuarioService.listar();
+         * model.addAttribute("UsuariosList", UsuariosList);
+         * model.addAttribute("UsuariosListSize", UsuariosList.size());
+         * System.out.println(UsuariosList);
+         */
+        return "login/perfil";
+
+    }
+
 
     @GetMapping("/cadastrar")
     public String inserir() {
@@ -44,7 +74,7 @@ public class UsuarioController {
     public String entrar(Usuario usuario, HttpServletRequest request) {
         var reqSession = request.getSession();
         try {
-            var result = usuarioService.logarUsuario(usuario);
+            var result = usuarioRepository.logarUsuario(usuario);
             System.out.println(result);
             reqSession.setAttribute("loggedUser", result);
         } catch (Exception err) {
@@ -54,9 +84,10 @@ public class UsuarioController {
         return "login/login";
     }
 
+
     @PostMapping("/cadastrar")
     public String publicarUsuario(Usuario usuario) {
-        var result = usuarioService.cadastrarUsuario(usuario);
+        var result = usuarioRepository.cadastrarUsuario(usuario);
         System.out.println(result);
         /*
          * try {
@@ -73,6 +104,18 @@ public class UsuarioController {
          * }
          */
         return "login/cadastrar";
+    }
+
+    //deprecated above
+    @GetMapping()
+    public String listar(Model model) {
+        /*
+         * List<Usuario> UsuariosList = UsuarioService.listar();
+         * model.addAttribute("UsuariosList", UsuariosList);
+         * model.addAttribute("UsuariosListSize", UsuariosList.size());
+         * System.out.println(UsuariosList);
+         */
+        return "Usuarios/lista";
     }
 
     @GetMapping("/{id}")

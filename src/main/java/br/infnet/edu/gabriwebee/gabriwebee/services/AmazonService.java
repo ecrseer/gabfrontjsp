@@ -72,6 +72,21 @@ public class AmazonService {
 
     }
 
+    public String uploadSetFile(String bucketName, MultipartFile multiPartFile, String filename) {
+        PutObjectResult result;
+        try {
+            File file = convertMultiPartToFile(multiPartFile);
+            result = amazonS3.putObject(bucketName, filename, file);
+            System.out.println("uploadSetFile " + result);
+            return result.toString();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            return "err";
+        }
+
+    }
+
 
     public List<S3ObjectSummary> listObjects(String bucketName) {
         //amazonS3.update
