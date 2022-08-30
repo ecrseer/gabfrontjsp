@@ -10,7 +10,7 @@
 <body>
 <%@include file="../components/menu.jsp" %>
 <h1>Perfil </h1>
-<form action="editarPerfil" method="post">
+<form action="editarPerfil" method="post" enctype="multipart/form-data">
 
     <div class="mb-3 col-6">
         <label for="login" class="form-label">Login</label>

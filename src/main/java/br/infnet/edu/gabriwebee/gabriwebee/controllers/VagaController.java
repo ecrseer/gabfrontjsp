@@ -1,7 +1,7 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
-import br.infnet.edu.gabriwebee.gabriwebee.services.VagaService;
+import br.infnet.edu.gabriwebee.gabriwebee.services.VagaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import java.util.List;
 public class VagaController {
 
     @Autowired
-    VagaService vagaService;
+    VagaRepository vagaRepository;
 
     @GetMapping()
     public String listar(Model model) {
-        List<Vaga> vagasList = vagaService.listar();
+        List<Vaga> vagasList = vagaRepository.listar();
         model.addAttribute("vagasList", vagasList);
         model.addAttribute("vagasListSize", vagasList.size());
         System.out.println(vagasList);
@@ -40,12 +40,12 @@ public class VagaController {
     public String publicarVaga(Vaga vaga) {
         try {
             System.out.println(vaga);
-            List<Vaga> vagasList = vagaService.listar();
+            List<Vaga> vagasList = vagaRepository.listar();
             int lastIndex = vagasList.size() - 1;
             var last = vagasList.get(lastIndex);
             vaga.setId(last.getId() + 1);
             // Vaga vaga;
-            Vaga vagaCadastrada = vagaService.addVaga(vaga);
+            Vaga vagaCadastrada = vagaRepository.addVaga(vaga);
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -65,7 +65,7 @@ public class VagaController {
 
     @GetMapping("/{id}/deletar")
     public String deletar(@PathVariable long id) {
-        Vaga vaga = vagaService.deleteVaga(id);
+        Vaga vaga = vagaRepository.deleteVaga(id);
         return "vagas/lista";
     }
 

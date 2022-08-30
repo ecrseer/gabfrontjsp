@@ -1,9 +1,7 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
-import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
-import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
-import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Controller;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/usuario")
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class UsuarioController {
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    UsuarioService usuarioService;
 
     @GetMapping("/perfil")
     public String perfil(Model model) {
@@ -33,16 +30,19 @@ public class UsuarioController {
         return "login/perfil";
     }
 
-    @PostMapping("/perfil")
-    public String editPerfil(@RequestPart(value = "bucketName") String bucketName,
-                             @RequestPart(value = "file") MultipartFile file, HttpServletRequest request) {
+    @PostMapping("/editarPerfil")
+    public String editPerfil(
+            @RequestPart(value = "profilePic") MultipartFile profilePic, HttpServletRequest request) {
         //var result = amazonService.uploadFile(bucketName, file);
         //System.out.println(result);
         var reqSession = request.getSession();
 
+
         try {
             Usuario user = (Usuario) reqSession.getAttribute("loggedUser");
             System.out.println("edit per++" + user);
+            var result = usuarioService.editUser(user, profilePic);
+            System.out.println("EDITresss " + result);
 
         } catch (Exception err) {
 
@@ -74,7 +74,7 @@ public class UsuarioController {
     public String entrar(Usuario usuario, HttpServletRequest request) {
         var reqSession = request.getSession();
         try {
-            var result = usuarioRepository.logarUsuario(usuario);
+            var result = usuarioService.logarUsuario(usuario);
             System.out.println(result);
             reqSession.setAttribute("loggedUser", result);
         } catch (Exception err) {
@@ -87,7 +87,7 @@ public class UsuarioController {
 
     @PostMapping("/cadastrar")
     public String publicarUsuario(Usuario usuario) {
-        var result = usuarioRepository.cadastrarUsuario(usuario);
+        var result = usuarioService.cadastrarUsuario(usuario);
         System.out.println(result);
         /*
          * try {
