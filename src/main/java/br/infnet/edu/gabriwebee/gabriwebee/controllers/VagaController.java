@@ -1,7 +1,7 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
-import br.infnet.edu.gabriwebee.gabriwebee.services.VagaRepository;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.VagaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/vagas")
-@EnableFeignClients(basePackages = "br.infnet.edu.gabriwebee.gabriwebee.services")
+@EnableFeignClients(basePackages = "br.infnet.edu.gabriwebee.gabriwebee.repositories")
 public class VagaController {
 
     @Autowired

@@ -1,4 +1,4 @@
-package br.infnet.edu.gabriwebee.gabriwebee.services;
+package br.infnet.edu.gabriwebee.gabriwebee.repositories;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(url = "http://localhost:8090/vagas", name = "VagaRepository")
+@FeignClient(url = "http://localhost:8097/vagas", name = "VagaRepository")
 public interface VagaRepository {
 
     @GetMapping()

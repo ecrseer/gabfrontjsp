@@ -1,7 +1,7 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
-import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioService;
+import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Controller;

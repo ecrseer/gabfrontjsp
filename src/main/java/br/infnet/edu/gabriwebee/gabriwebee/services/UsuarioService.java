@@ -1,8 +1,8 @@
-package br.infnet.edu.gabriwebee.gabriwebee.repositories;
+package br.infnet.edu.gabriwebee.gabriwebee.services;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
-import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
