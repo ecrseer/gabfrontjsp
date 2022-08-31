@@ -31,30 +31,19 @@ public class UsuarioController {
     }
 
     @PostMapping("/editarPerfil")
-    public String editPerfil(
-            @RequestPart(value = "profilePic") MultipartFile profilePic, HttpServletRequest request) {
-        //var result = amazonService.uploadFile(bucketName, file);
-        //System.out.println(result);
+    public String editPerfil(@RequestPart(value = "profilePic") MultipartFile profilePic,
+                             HttpServletRequest request) {
+
         var reqSession = request.getSession();
-
-
         try {
             Usuario user = (Usuario) reqSession.getAttribute("loggedUser");
-            System.out.println("edit per++" + user);
-            var result = usuarioService.editUser(user, profilePic);
-            System.out.println("EDITresss " + result);
 
+            var result = usuarioService.editUser(user, profilePic);
         } catch (Exception err) {
 
         }
 
 
-        /*
-         * List<Usuario> UsuariosList = UsuarioService.listar();
-         * model.addAttribute("UsuariosList", UsuariosList);
-         * model.addAttribute("UsuariosListSize", UsuariosList.size());
-         * System.out.println(UsuariosList);
-         */
         return "login/perfil";
 
     }

@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 @Controller
 @RequestMapping("/buckets")
 public class BucketsController {
@@ -17,9 +19,11 @@ public class BucketsController {
 
     @GetMapping
     public String listar(Model model) {
+
         try {
+            amazonService.getFileFrom("gabecrbuck", "users/2/profilePic.jpeg");
+
             var bkcs = amazonService.listOfBuckets();
-            System.out.println("AAAAAAAAAAAAAAAAAbuckss" + bkcs);
             model.addAttribute("bucketsList", bkcs);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -29,7 +33,7 @@ public class BucketsController {
 
     @PostMapping("/upload")
     public String MyUploadByMulti(@RequestPart(value = "bucketName") String bucketName,
-            @RequestPart(value = "file") MultipartFile file) {
+                                  @RequestPart(value = "file") MultipartFile file) {
         var result = amazonService.uploadFile(bucketName, file);
         System.out.println(result);
         // return "redirect:/" + listar(model);

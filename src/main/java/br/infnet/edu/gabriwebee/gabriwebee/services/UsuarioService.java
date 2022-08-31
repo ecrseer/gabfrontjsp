@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UsuarioService {
-
     final String DEFAULT_BUCKET = "gabecrbuck";
 
     @Autowired
@@ -20,8 +19,9 @@ public class UsuarioService {
     AmazonService amazonService;
 
     public String editUser(Usuario usuario, MultipartFile multipartFile) {
-        String filename = "users/" + usuario.getLogin() + "/profilePic";
-        System.out.println("DEFAAA" + DEFAULT_BUCKET);
+        String nameeditUser = multipartFile.getOriginalFilename();
+
+        String filename = "users/" + usuario.getLogin() + "/profilePic.jpeg";
         var result = amazonService.uploadSetFile(DEFAULT_BUCKET, multipartFile, filename);
 
         return "";
