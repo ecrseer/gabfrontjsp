@@ -112,12 +112,12 @@ public class AmazonService {
             S3Object s3Object = amazonS3.getObject(bucketName, key);
             S3ObjectInputStream stream = s3Object.getObjectContent();
 
-            String[] pathNames = {"files"};
+            String[] pathNames = {"files", key};
             String path = String.join(File.separator, pathNames);
 
 
-            File convFile = new File(path, key);
-            convFile.createNewFile();
+            File convFile = new File(path);
+            //convFile.createNewFile();
             FileOutputStream outputStream = new FileOutputStream(convFile);
             byte[] readBuffer = new byte[1024];
             int readLength = 0;
