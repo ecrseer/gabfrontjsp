@@ -116,40 +116,10 @@ public class AmazonService {
         String[] pathNames = {"files", keyToWindows};
         String path = String.join(File.separator, pathNames);
 
-        System.out.println("pathNames::::" + path);
+        System.out.println("getPath::::" + path);
         return path;
     }
 
-    public void getObject(S3Object s3Object, String filename) {
-        try {
-
-            // Referência do Objeto na AWS
-
-            // Para realizar o download sob demanda
-            S3ObjectInputStream s3OIS = s3Object.getObjectContent();
-            // Criar um aquivo para armazenar o conteúdo do objeto
-            String filePath = "src/main/resources/static/images";
-            File s3File = new File(filePath, filename);
-            s3File.getParentFile().mkdirs();
-            // OutputStream escreve um conteúdo dentro de um file
-            FileOutputStream fos = new FileOutputStream(s3File);
-            // Variáveis de controle
-            byte[] readBuf = new byte[1024]; // os bytes do s3OIS
-            int readLen = 0;
-
-            while ((readLen = s3OIS.read(readBuf)) > 0) {
-                fos.write(readBuf, 0, readLen);
-            }
-            s3OIS.close();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 
     private void writeFile(File convFile, S3ObjectInputStream stream) {
         try {
@@ -180,14 +150,18 @@ public class AmazonService {
         try {
 
             S3Object s3Object = amazonS3.getObject(bucketName, key);
-            System.out.println("key:::" + key);
-            getObject(s3Object, key);
-            /*S3ObjectInputStream stream = s3Object.getObjectContent();
+            /*System.out.println("key:::" + key);
+            getObject(s3Object, key);*/
 
 
-            String path = getPath();
-            File convFile = new File(path);
-            writeFile(convFile, stream);*/
+            S3ObjectInputStream stream = s3Object.getObjectContent();
+
+
+            //String path = getPath();
+            
+            String path = "src/main/resources/static/images";
+            File convFile = new File(path, "profilePic.jpeg");
+            writeFile(convFile, stream);
 
         } catch (Exception er) {
             System.out.println(er.getMessage());
