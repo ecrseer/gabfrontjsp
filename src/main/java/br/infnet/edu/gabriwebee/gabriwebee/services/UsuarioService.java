@@ -21,8 +21,8 @@ public class UsuarioService {
     public String editUser(Usuario usuario, MultipartFile multipartFile) {
         String nameeditUser = multipartFile.getOriginalFilename();
 
-        String filename = "users/" + usuario.getLogin() + "/profilePic.jpeg";
-        var result = amazonService.uploadSetFile(DEFAULT_BUCKET, multipartFile, filename);
+        String filePath = "users/" + usuario.getLogin() + "/";
+        var result = amazonService.uploadSetFile(DEFAULT_BUCKET, multipartFile, filePath);
 
         return "";
     }

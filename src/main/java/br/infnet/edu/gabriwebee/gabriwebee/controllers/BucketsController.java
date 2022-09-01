@@ -21,7 +21,8 @@ public class BucketsController {
     public String listar(Model model) {
 
         try {
-            amazonService.getFileFrom("gabecrbuck", "users/2/profilePic.jpeg");
+            String key = "users/2/profilePic.jpeg";
+            amazonService.getFileFrom("gabecrbuck", key);
 
             var bkcs = amazonService.listOfBuckets();
             model.addAttribute("bucketsList", bkcs);

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -55,7 +56,7 @@ public class AmazonService {
 
             String[] pathNames = {"files", file.getOriginalFilename()};
             String path = String.join(File.separator, pathNames);
-
+            System.out.println("PATHH " + path);
 
             convFile = new File(path);
         } catch (Exception ex) {
@@ -82,7 +83,7 @@ public class AmazonService {
         try {
             File file = convertMultiPartToFile(multiPartFile);
             result = amazonS3.putObject(bucketName, file.getName(), file);
-            System.out.println("resulttttt " + result);
+
             return result.toString();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -92,11 +93,12 @@ public class AmazonService {
 
     }
 
-    public String uploadSetFile(String bucketName, MultipartFile multiPartFile, String filename) {
+    public String uploadSetFile(String bucketName, MultipartFile multiPartFile, String filePath) {
         PutObjectResult result;
         try {
             File file = convertMultiPartToFile(multiPartFile);
-            result = amazonS3.putObject(bucketName, filename, file);
+            String fileKey = filePath + File.separator + file.getName();
+            result = amazonS3.putObject(bucketName, fileKey, file);
 
             return result.toString();
         } catch (Exception e) {
@@ -107,28 +109,86 @@ public class AmazonService {
 
     }
 
-    public void getFileFrom(String bucketName, String key) {
+    private String getPath() {
+        //String keyToWindows = key.replaceAll("\\/gi", File.separator);
+        String keyToWindows = "users\\2\\profilePic.jpeg";
+
+        String[] pathNames = {"files", keyToWindows};
+        String path = String.join(File.separator, pathNames);
+
+        System.out.println("pathNames::::" + path);
+        return path;
+    }
+
+    public void getObject(S3Object s3Object, String filename) {
         try {
-            S3Object s3Object = amazonS3.getObject(bucketName, key);
-            S3ObjectInputStream stream = s3Object.getObjectContent();
 
-            String[] pathNames = {"files", key};
-            String path = String.join(File.separator, pathNames);
+            // Referência do Objeto na AWS
+
+            // Para realizar o download sob demanda
+            S3ObjectInputStream s3OIS = s3Object.getObjectContent();
+            // Criar um aquivo para armazenar o conteúdo do objeto
+            String filePath = "src/main/resources/static/images";
+            File s3File = new File(filePath, filename);
+            s3File.getParentFile().mkdirs();
+            // OutputStream escreve um conteúdo dentro de um file
+            FileOutputStream fos = new FileOutputStream(s3File);
+            // Variáveis de controle
+            byte[] readBuf = new byte[1024]; // os bytes do s3OIS
+            int readLen = 0;
+
+            while ((readLen = s3OIS.read(readBuf)) > 0) {
+                fos.write(readBuf, 0, readLen);
+            }
+            s3OIS.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void writeFile(File convFile, S3ObjectInputStream stream) {
+        try {
+            convFile.getParentFile().mkdirs();
 
 
-            File convFile = new File(path);
-            //convFile.createNewFile();
+            System.out.println("ccccc" + convFile.getAbsolutePath());
             FileOutputStream outputStream = new FileOutputStream(convFile);
             byte[] readBuffer = new byte[1024];
             int readLength = 0;
 
-            System.out.println("ccccc" + convFile.getAbsolutePath());
-
             while ((readLength = stream.read(readBuffer)) > 0) {
                 outputStream.write(readBuffer, 0, readLength);
             }
+
             stream.close();
             outputStream.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void getFileFrom(String bucketName, String key) {
+        try {
+
+            S3Object s3Object = amazonS3.getObject(bucketName, key);
+            System.out.println("key:::" + key);
+            getObject(s3Object, key);
+            /*S3ObjectInputStream stream = s3Object.getObjectContent();
+
+
+            String path = getPath();
+            File convFile = new File(path);
+            writeFile(convFile, stream);*/
+
         } catch (Exception er) {
             System.out.println(er.getMessage());
         }
