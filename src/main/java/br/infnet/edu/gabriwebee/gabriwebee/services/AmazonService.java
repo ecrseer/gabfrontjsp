@@ -78,6 +78,38 @@ public class AmazonService {
 
     }
 
+    public File convertMultiPartToFile(MultipartFile file, File filePointer) {
+
+        filePointer.getParentFile().mkdirs();
+        try {
+            filePointer.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(filePointer);
+            fileOutputStream.write(file.getBytes());
+            fileOutputStream.close();
+        } catch (IOException ioex) {
+            System.out.println(ioex.getMessage());
+        }
+
+        return filePointer;
+
+    }
+
+    public PutObjectResult uploadSetFile(String bucketName, String fileKey,
+                                         File localFile) {
+        try {
+            return amazonS3.putObject(bucketName, fileKey, localFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+    }
+
     public String uploadFile(String bucketName, MultipartFile multiPartFile) {
         PutObjectResult result;
         try {
@@ -86,38 +118,11 @@ public class AmazonService {
 
             return result.toString();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         } finally {
             return "err";
         }
 
-    }
-
-    public String uploadSetFile(String bucketName, MultipartFile multiPartFile, String filePath) {
-        PutObjectResult result;
-        try {
-            File file = convertMultiPartToFile(multiPartFile);
-            String fileKey = filePath + File.separator + file.getName();
-            result = amazonS3.putObject(bucketName, fileKey, file);
-
-            return result.toString();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            return "err";
-        }
-
-    }
-
-    private String getPath() {
-        //String keyToWindows = key.replaceAll("\\/gi", File.separator);
-        String keyToWindows = "users\\2\\profilePic.jpeg";
-
-        String[] pathNames = {"files", keyToWindows};
-        String path = String.join(File.separator, pathNames);
-
-        System.out.println("getPath::::" + path);
-        return path;
     }
 
 
@@ -158,7 +163,7 @@ public class AmazonService {
 
 
             //String path = getPath();
-            
+
             String path = "src/main/resources/static/images";
             File convFile = new File(path, "profilePic.jpeg");
             writeFile(convFile, stream);

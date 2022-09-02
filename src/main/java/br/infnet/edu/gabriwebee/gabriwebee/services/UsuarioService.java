@@ -3,10 +3,13 @@ package br.infnet.edu.gabriwebee.gabriwebee.services;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @Service
 public class UsuarioService {
@@ -19,10 +22,18 @@ public class UsuarioService {
     AmazonService amazonService;
 
     public String editUser(Usuario usuario, MultipartFile multipartFile) {
-        String nameeditUser = multipartFile.getOriginalFilename();
+        String filename = multipartFile.getOriginalFilename();
+        String extension = FilenameUtils.getExtension(filename);
 
-        String filePath = "users/" + usuario.getLogin() + "/";
-        var result = amazonService.uploadSetFile(DEFAULT_BUCKET, multipartFile, filePath);
+        String newName = "/profilePic." + extension;
+        String fileKeyAWS = "users/" + usuario.getLogin() + "/" + newName;
+        String localPath = "src/main/resources/static/images/"
+                + usuario.getLogin() + newName;
+        
+
+        System.out.println("localPath:::" + localPath);
+        File filePointer = amazonService.convertMultiPartToFile(multipartFile, new File(localPath));
+        var result = amazonService.uploadSetFile(DEFAULT_BUCKET, fileKeyAWS, filePointer);
 
         return "";
     }
