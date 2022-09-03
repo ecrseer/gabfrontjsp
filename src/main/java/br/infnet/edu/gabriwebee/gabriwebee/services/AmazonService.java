@@ -151,22 +151,13 @@ public class AmazonService {
         }
     }
 
-    public void getFileFrom(String bucketName, String key) {
+    public void getFileFrom(String bucketName, String key,File filePointer) {
         try {
 
             S3Object s3Object = amazonS3.getObject(bucketName, key);
-            /*System.out.println("key:::" + key);
-            getObject(s3Object, key);*/
-
-
             S3ObjectInputStream stream = s3Object.getObjectContent();
 
-
-            //String path = getPath();
-
-            String path = "src/main/resources/static/images";
-            File convFile = new File(path, "profilePic.jpeg");
-            writeFile(convFile, stream);
+            writeFile(filePointer, stream);
 
         } catch (Exception er) {
             System.out.println(er.getMessage());

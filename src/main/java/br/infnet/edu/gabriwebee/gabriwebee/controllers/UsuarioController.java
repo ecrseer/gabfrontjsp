@@ -20,7 +20,14 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @GetMapping("/perfil")
-    public String perfil(Model model) {
+    public String perfil(Model model, HttpServletRequest request) {
+        var session = request.getSession();
+        try {
+            Usuario usuario = (Usuario) session.getAttribute("loggedUser");
+            usuarioService.loadUser(usuario);
+        } catch (Exception excep) {
+            excep.printStackTrace();
+        }
         /*
          * List<Usuario> UsuariosList = UsuarioService.listar();
          * model.addAttribute("UsuariosList", UsuariosList);

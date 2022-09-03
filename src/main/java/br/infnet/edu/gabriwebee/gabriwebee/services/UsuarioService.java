@@ -26,16 +26,28 @@ public class UsuarioService {
         String extension = FilenameUtils.getExtension(filename);
 
         String newName = "/profilePic." + extension;
-        String fileKeyAWS = "users/" + usuario.getLogin() + "/" + newName;
+        String fileKeyAWS = "users/" + usuario.getLogin() + "" + newName;
         String localPath = "src/main/resources/static/images/"
                 + usuario.getLogin() + newName;
-        
 
         System.out.println("localPath:::" + localPath);
         File filePointer = amazonService.convertMultiPartToFile(multipartFile, new File(localPath));
         var result = amazonService.uploadSetFile(DEFAULT_BUCKET, fileKeyAWS, filePointer);
 
         return "";
+    }
+
+    public void loadUser(Usuario usuario) {
+        //temp
+        String extension = "png";
+
+        String newName = "/profilePic." + extension;
+        String fileKeyAWS = "users/" + usuario.getLogin() + "" + newName;
+        String localPath = "src/main/resources/static/images/"
+                + usuario.getLogin() + newName;
+
+        File filePointer = new File(localPath);
+        amazonService.getFileFrom(DEFAULT_BUCKET, fileKeyAWS, filePointer);
     }
 
 
