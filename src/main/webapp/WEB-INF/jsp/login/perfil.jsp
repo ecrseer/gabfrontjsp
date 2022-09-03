@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3 col-6">
             <label for="profilePic" class="form-label">Perfil</label>
-            <input type="file" name="profilePic" class="form-control" id="profilePic">
+            <input type="file" name="profilePic" class="form-control" id="profilePic" accept="image/png">
         </div>
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Editar Foto</button>
