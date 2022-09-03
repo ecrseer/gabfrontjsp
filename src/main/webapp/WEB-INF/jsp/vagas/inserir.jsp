@@ -31,7 +31,7 @@
                id="perfilMinimo" class="form-control" id="perfilMinimo">
 
         <button class="btn btn-primary" type="submit"
-                formaction="/addCriterio" formmethod="post">Adicionar
+                formaction="addCriterio" formmethod="post">Adicionar
         </button>
     </div>
     <div class="col-12">
