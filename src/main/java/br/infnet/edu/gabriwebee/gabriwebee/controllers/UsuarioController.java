@@ -1,6 +1,7 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
+import br.infnet.edu.gabriwebee.gabriwebee.dtos.CadastraVagaDto;
 import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/usuario")
 @EnableFeignClients()
 public class UsuarioController {
+    private String DTO_KEY_CADASTRAVAGA = new Usuario().getKey();
 
     @Autowired
     UsuarioService usuarioService;

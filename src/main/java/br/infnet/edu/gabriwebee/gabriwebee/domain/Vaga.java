@@ -1,10 +1,13 @@
 package br.infnet.edu.gabriwebee.gabriwebee.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vaga {
+public class Vaga implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     long idVaga;
     String cargo;
 
@@ -23,6 +26,15 @@ public class Vaga {
 
     public Vaga() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Vaga{" +
+                "idVaga=" + idVaga +
+                ", cargo='" + cargo + '\'' +
+                ", criterios=" + criterios +
+                '}';
     }
 
     public long getId() {

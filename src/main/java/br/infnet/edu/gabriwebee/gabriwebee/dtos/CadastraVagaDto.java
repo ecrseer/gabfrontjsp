@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CadastraVagaDto {
+public class CadastraVagaDto implements iMyWebDto {
 
     String cargo;
     String criterio;
@@ -20,6 +20,10 @@ public class CadastraVagaDto {
     public Criterio generateCriterio() {
         return new Criterio(criterio, peso, perfilMinimo);
 
+    }
+
+    public String getKey() {
+        return "CadastraVagaDto";
     }
 
 

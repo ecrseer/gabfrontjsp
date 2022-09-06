@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -23,7 +24,7 @@ import java.util.List;
 @EnableFeignClients(basePackages = "br.infnet.edu.gabriwebee.gabriwebee.repositories")
 public class VagaController {
 
-    private String DTO_KEY_CADASTRAVAGA = "vagaCadastro";
+    private String DTO_KEY_CADASTRAVAGA = new CadastraVagaDto().getKey();
 
     @Autowired
     VagaRepository vagaRepository;
@@ -38,16 +39,12 @@ public class VagaController {
         return "vagas/lista";
     }
 
-    @GetMapping("/inserir")
-    public String inserir() {
-        return "vagas/inserir";
-    }
 
-    private Vaga getCadastrarDto(HttpSession session) {
+    private Vaga getCadastrarDto(HttpSession session, CadastraVagaDto dto) {
         try {
             Vaga vagaCadastro = (Vaga) session.getAttribute(DTO_KEY_CADASTRAVAGA);
             if (vagaCadastro == null) {
-                session.setAttribute(DTO_KEY_CADASTRAVAGA, new Vaga(""));
+                session.setAttribute(DTO_KEY_CADASTRAVAGA, new Vaga(dto.getCargo()));
                 vagaCadastro = (Vaga) session.getAttribute(DTO_KEY_CADASTRAVAGA);
             }
             return vagaCadastro;
@@ -60,11 +57,11 @@ public class VagaController {
 
     @PostMapping("/addCriterio")
     public String addCriterio(CadastraVagaDto dto, HttpServletRequest request) {
-        
-        try {
-            HttpSession session = request.getSession();
 
-            Vaga vagaCadastro = getCadastrarDto(session);
+        try {
+
+            HttpSession session = request.getSession();
+            Vaga vagaCadastro = getCadastrarDto(session, dto);
 
             List<Criterio> criteriosCadastrados = vagaCadastro.getCriterios();
 
@@ -78,17 +75,22 @@ public class VagaController {
         return "vagas/inserir";
     }
 
+    @GetMapping("/inserir")
+    public String inserir() {
+        return "vagas/inserir";
+    }
+
     @PostMapping("/inserir")
     public String publicarVaga(Vaga vaga, HttpServletRequest request) {
 
         try {
-            System.out.println(vaga);
+            HttpSession session = request.getSession();
+            Vaga vagaCadastro = (Vaga) session.getAttribute(DTO_KEY_CADASTRAVAGA);
+            Vaga vagaCadastrada = vagaRepository.addVaga(vagaCadastro);
+
+
+            session.setAttribute(DTO_KEY_CADASTRAVAGA, null);
             List<Vaga> vagasList = vagaRepository.listar();
-            int lastIndex = vagasList.size() - 1;
-            var last = vagasList.get(lastIndex);
-            vaga.setId(last.getId() + 1);
-            // Vaga vaga;
-            Vaga vagaCadastrada = vagaRepository.addVaga(vaga);
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
