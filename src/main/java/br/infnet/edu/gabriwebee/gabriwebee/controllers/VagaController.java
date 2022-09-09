@@ -1,6 +1,8 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Criterio;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
 import br.infnet.edu.gabriwebee.gabriwebee.dtos.CadastraVagaDto;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.VagaRepository;
@@ -23,7 +25,7 @@ import java.util.List;
 @RequestMapping("/vagas")
 @EnableFeignClients(basePackages = "br.infnet.edu.gabriwebee.gabriwebee.repositories")
 public class VagaController {
-
+    private String KEY_SESSAO_USUARIO =  new Usuario().getKey();
     private String DTO_KEY_CADASTRAVAGA = new CadastraVagaDto().getKey();
 
     @Autowired
@@ -86,9 +88,10 @@ public class VagaController {
         try {
             HttpSession session = request.getSession();
             Vaga vagaCadastro = (Vaga) session.getAttribute(DTO_KEY_CADASTRAVAGA);
+            Empresa usuario = (Empresa) session.getAttribute(KEY_SESSAO_USUARIO);
+            vagaCadastro.setEmpresaFk(usuario);
+
             Vaga vagaCadastrada = vagaRepository.addVaga(vagaCadastro);
-
-
             session.setAttribute(DTO_KEY_CADASTRAVAGA, null);
             List<Vaga> vagasList = vagaRepository.listar();
 

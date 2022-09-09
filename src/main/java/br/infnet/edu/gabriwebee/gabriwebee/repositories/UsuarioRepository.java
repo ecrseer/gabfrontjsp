@@ -1,5 +1,6 @@
 package br.infnet.edu.gabriwebee.gabriwebee.repositories;
 
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,6 @@ public interface UsuarioRepository {
     public Usuario cadastrarUsuario(@RequestBody Usuario usuario);
 
     @PostMapping("/logar")
-    public Usuario logarUsuario(@RequestBody Usuario usuario);
+    public Empresa logarUsuario(@RequestBody Usuario usuario);
 
 }

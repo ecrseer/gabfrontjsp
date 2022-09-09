@@ -1,5 +1,6 @@
 package br.infnet.edu.gabriwebee.gabriwebee.services;
 
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
@@ -38,6 +39,7 @@ public class UsuarioService {
     }
 
     public void loadUser(Usuario usuario) {
+        
         //temp
         String extension = "png";
 
@@ -55,7 +57,7 @@ public class UsuarioService {
         return usuarioRepository.cadastrarUsuario(usuario);
     }
 
-    public Usuario logarUsuario(@RequestBody Usuario usuario) {
+    public Empresa logarUsuario(@RequestBody Usuario usuario) {
         return usuarioRepository.logarUsuario(usuario);
     }
 

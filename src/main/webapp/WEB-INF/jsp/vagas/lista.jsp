@@ -27,16 +27,14 @@
             </tr>
             <c:forEach items="${vagasList}" var="vaga">
                 <tr>
-                    <td>${vaga.id}</td>
-                    <td>${vaga.cargo}</td>
+                    <td>${vaga.getIdVaga()}</td>
+                    <td>${vaga.getCargo()}</td>
                     <td>
-                        <c:forEach items="${vaga.criterios}" var="criterio">
-                            ${criterio.descricao}-${criterio.perfilMinimo}
-                        </c:forEach>
+
                     </td>
                     <td>
                     <button type="button" class="btn btn-danger"
-                    formmethod="get" formaction="/vagas/${vaga.getId()}/deletar">
+                    formmethod="get" formaction="/vagas/${vaga.getIdVaga()}/deletar">
                     Excluir</button>
                         
                     </td>

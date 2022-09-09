@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/usuario")
 @EnableFeignClients()
 public class UsuarioController {
-    private String DTO_KEY_CADASTRAVAGA = new Usuario().getKey();
+    private String KEY_SESSAO_USUARIO = new Usuario().getKey();
 
     @Autowired
     UsuarioService usuarioService;
@@ -71,10 +71,11 @@ public class UsuarioController {
     @PostMapping("/logar")
     public String entrar(Usuario usuario, HttpServletRequest request) {
         var reqSession = request.getSession();
+
         try {
-            var result = usuarioService.logarUsuario(usuario);
-            System.out.println(result);
-            reqSession.setAttribute("loggedUser", result);
+            var empresa = usuarioService.logarUsuario(usuario);
+            System.out.println(empresa);
+            reqSession.setAttribute(KEY_SESSAO_USUARIO, empresa);
         } catch (Exception err) {
             System.out.println(err);
         }

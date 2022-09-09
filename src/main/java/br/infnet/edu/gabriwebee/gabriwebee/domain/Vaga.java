@@ -1,10 +1,17 @@
 package br.infnet.edu.gabriwebee.gabriwebee.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class Vaga implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -12,6 +19,8 @@ public class Vaga implements Serializable {
     String cargo;
 
     List<Criterio> criterios;
+
+    Empresa empresaFk;
 
     public Vaga(String cargo) {
         this.cargo = cargo;
@@ -37,27 +46,4 @@ public class Vaga implements Serializable {
                 '}';
     }
 
-    public long getId() {
-        return idVaga;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public List<Criterio> getCriterios() {
-        return criterios;
-    }
-
-    public void setId(long id) {
-        this.idVaga = id;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
-
-    public void setCriterios(List<Criterio> criterios) {
-        this.criterios = criterios;
-    }
 }
