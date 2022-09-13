@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,24 +19,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/usuario/perfil">Meu perfil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/usuario/cadastrar">Cadastrar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="/usuario/logar">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/vagas">Lista de vagas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/vagas/inserir">Publicar vaga</a>
-                </li>
-                <li class="nav-item">
+                <c:if test="${loggedUser != null}">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/usuario/perfil">Meu perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vagas">Lista de vagas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vagas/inserir">Publicar vaga</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/vagas/deslogar">deslogar</a>
+                    </li>
+                </c:if>
+                <c:if test="${loggedUser == null}">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/usuario/cadastrar">Cadastrar Empresa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/usuario/cadastrar-candidato">Cadastrar
+                            Candidato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="/usuario/logar">Login</a>
+                    </li>
+                </c:if>
+                <%--<li class="nav-item">
                     <a class="nav-link" href="/buckets">Buckets</a>
-                </li>
+                </li>--%>
             </ul>
         </div>
     </div>

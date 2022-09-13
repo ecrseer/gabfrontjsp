@@ -49,12 +49,8 @@ public class UsuarioController {
 
             var result = usuarioService.editUser(user, profilePic);
         } catch (Exception err) {
-
         }
-
-
         return "login/perfil";
-
     }
 
 
@@ -88,32 +84,13 @@ public class UsuarioController {
     public String publicarUsuario(Usuario usuario) {
         var result = usuarioService.cadastrarUsuario(usuario);
         System.out.println(result);
-        /*
-         * try {
-         * System.out.println(Usuario);
-         * List<Usuario> UsuariosList = UsuarioService.listar();
-         * int lastIndex = UsuariosList.size() - 1;
-         * var last = UsuariosList.get(lastIndex);
-         * Usuario.setId(last.getId() + 1);
-         * // Usuario Usuario;
-         * Usuario UsuarioCadastrada = UsuarioService.addUsuario(Usuario);
-         *
-         * } catch (Exception ex) {
-         * System.out.println(ex.getMessage());
-         * }
-         */
         return "login/cadastrar";
     }
 
     //deprecated above
     @GetMapping()
     public String listar(Model model) {
-        /*
-         * List<Usuario> UsuariosList = UsuarioService.listar();
-         * model.addAttribute("UsuariosList", UsuariosList);
-         * model.addAttribute("UsuariosListSize", UsuariosList.size());
-         * System.out.println(UsuariosList);
-         */
+
         return "Usuarios/lista";
     }
 
@@ -122,15 +99,24 @@ public class UsuarioController {
         return "Usuarios/exibe";
     }
 
-    @GetMapping("/{id}/alterar")
-    public String alterar(@PathVariable long id) {
-        return "";
-    }
 
     @GetMapping("/{id}/deletar")
     public String deletar(@PathVariable long id) {
         // Usuario Usuario = UsuarioService.deleteUsuario(id);
         return "Usuarios/lista";
+    }
+
+    @GetMapping("/cadastrar-candidato")
+    public String paginaCadastrarCandidato() {
+        return "login/cadastrarCandidato";
+    }
+
+    @PostMapping("/cadastrar-candidato")
+    public String cadastrarCandidato(Usuario usuario) {
+        var result = usuarioService.cadastrarCandidato(usuario);
+        System.out.println(result);
+
+        return "login/cadastrarCandidato";
     }
 
 }

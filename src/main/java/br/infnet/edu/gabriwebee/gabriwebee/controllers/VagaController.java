@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/vagas")
 @EnableFeignClients(basePackages = "br.infnet.edu.gabriwebee.gabriwebee.repositories")
 public class VagaController {
-    private String KEY_SESSAO_USUARIO =  new Usuario().getKey();
+    private String KEY_SESSAO_USUARIO = new Usuario().getKey();
     private String DTO_KEY_CADASTRAVAGA = new CadastraVagaDto().getKey();
 
     @Autowired
@@ -115,6 +115,15 @@ public class VagaController {
     public String deletar(@PathVariable long id) {
         Vaga vaga = vagaRepository.deleteVaga(id);
         return "vagas/lista";
+    }
+
+    @GetMapping("/deslogar")
+    public String deslogar(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        session.setAttribute(DTO_KEY_CADASTRAVAGA, null);
+        session.setAttribute(KEY_SESSAO_USUARIO, null);
+        return ":redirect:/";
     }
 
 }

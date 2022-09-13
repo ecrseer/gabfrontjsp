@@ -17,4 +17,5 @@ public interface UsuarioRepository {
     @PostMapping("/logar")
     public Empresa logarUsuario(@RequestBody Usuario usuario);
 
+
 }

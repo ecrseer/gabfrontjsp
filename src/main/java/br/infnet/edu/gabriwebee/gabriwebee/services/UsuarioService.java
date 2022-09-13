@@ -2,6 +2,7 @@ package br.infnet.edu.gabriwebee.gabriwebee.services;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.CandidatoRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
 import org.apache.commons.io.FilenameUtils;
@@ -18,6 +19,9 @@ public class UsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    CandidatoRepository candidatoRepository;
 
     @Autowired
     AmazonService amazonService;
@@ -39,7 +43,7 @@ public class UsuarioService {
     }
 
     public void loadUser(Usuario usuario) {
-        
+
         //temp
         String extension = "png";
 
@@ -59,6 +63,10 @@ public class UsuarioService {
 
     public Empresa logarUsuario(@RequestBody Usuario usuario) {
         return usuarioRepository.logarUsuario(usuario);
+    }
+
+    public Usuario cadastrarCandidato(@RequestBody Usuario usuario) {
+        return candidatoRepository.cadastrarCandidato(usuario);
     }
 
 
