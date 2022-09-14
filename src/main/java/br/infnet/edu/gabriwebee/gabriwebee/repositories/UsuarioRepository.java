@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@FeignClient(url = "http://localhost:8097/login", name = "UsuarioRepository")
+@FeignClient(url = "http://localhost:8097/loginEmpresa", name = "UsuarioRepository")
 public interface UsuarioRepository {
 
     @PostMapping("/cadastrar")
