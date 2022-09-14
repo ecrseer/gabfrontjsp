@@ -14,8 +14,6 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Candidato extends Usuario {
     long idCandidato;
-
-
     long cpf;
 }
 

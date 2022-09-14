@@ -66,7 +66,7 @@ public class UsuarioService {
         return usuarioRepository.logarUsuario(usuario);
     }
 
-    public Usuario cadastrarCandidato(@RequestBody Usuario usuario) {
+    public Candidato cadastrarCandidato(@RequestBody Candidato usuario) {
         return candidatoRepository.cadastrarCandidato(usuario);
     }
 

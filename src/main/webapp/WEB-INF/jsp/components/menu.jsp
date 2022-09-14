@@ -26,9 +26,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/vagas">Lista de vagas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/vagas/inserir">Publicar vaga</a>
-                    </li>
+                    <c:if test="${loggedUser.getTipo()=='E'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/vagas/inserir">Publicar vaga</a>
+                        </li>
+                    </c:if>
+
+
                     <li class="nav-item">
                         <a class="nav-link" href="/vagas/deslogar">deslogar</a>
                     </li>

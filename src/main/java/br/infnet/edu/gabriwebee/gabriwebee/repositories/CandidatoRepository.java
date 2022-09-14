@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(url = "http://localhost:8082/login", name = "CandidatoRepository")
 public interface CandidatoRepository {
     @PostMapping("/cadastrar")
-    public Usuario cadastrarCandidato(@RequestBody Usuario usuario);
+    public Candidato cadastrarCandidato(@RequestBody Candidato usuario);
 
     @PostMapping("/logar")
     public Candidato logarCandidato(@RequestBody Usuario usuario);

@@ -79,8 +79,9 @@ public class UsuarioController {
         return "login/login";
     }
 
+
     @PostMapping("/logar-candidato")
-    public String entrarCandidato(Usuario usuario, HttpServletRequest request) {
+    public String entrarCandidato(Candidato usuario, HttpServletRequest request) {
         var reqSession = request.getSession();
 
         try {
@@ -94,17 +95,18 @@ public class UsuarioController {
         return "login/login";
     }
 
-
     @PostMapping("/cadastrar")
-    public String publicarUsuario(Usuario usuario) {
+    public String cadastrarEmpresa(Usuario usuario) {
         var result = usuarioService.cadastrarUsuario(usuario);
+
         System.out.println(result);
         return "login/cadastrar";
     }
 
 
     @PostMapping("/cadastrar-candidato")
-    public String cadastrarCandidato(Usuario usuario) {
+    public String cadastrarCandidato(Candidato usuario) {
+
         var result = usuarioService.cadastrarCandidato(usuario);
         System.out.println(result);
 
