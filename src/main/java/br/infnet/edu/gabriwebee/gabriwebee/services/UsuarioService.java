@@ -1,5 +1,6 @@
 package br.infnet.edu.gabriwebee.gabriwebee.services;
 
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Candidato;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.CandidatoRepository;
@@ -67,6 +68,10 @@ public class UsuarioService {
 
     public Usuario cadastrarCandidato(@RequestBody Usuario usuario) {
         return candidatoRepository.cadastrarCandidato(usuario);
+    }
+
+    public Candidato logarCandidato(@RequestBody Usuario usuario) {
+        return candidatoRepository.logarCandidato(usuario);
     }
 
 

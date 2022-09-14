@@ -10,7 +10,7 @@
 <body>
 <%@include file="../components/menu.jsp" %>
 <h1>Cadastre-se </h1>
-<form action="cadastrarCandidato" method="post">
+<form action="cadastrar-candidato" method="post">
 
     <div class="mb-3 col-6">
         <label for="login" class="form-label">Login</label>

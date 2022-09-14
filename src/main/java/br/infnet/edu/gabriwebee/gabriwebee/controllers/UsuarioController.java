@@ -1,7 +1,8 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Candidato;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
-import br.infnet.edu.gabriwebee.gabriwebee.dtos.CadastraVagaDto;
 import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -30,12 +31,6 @@ public class UsuarioController {
         } catch (Exception excep) {
             excep.printStackTrace();
         }
-        /*
-         * List<Usuario> UsuariosList = UsuarioService.listar();
-         * model.addAttribute("UsuariosList", UsuariosList);
-         * model.addAttribute("UsuariosListSize", UsuariosList.size());
-         * System.out.println(UsuariosList);
-         */
         return "login/perfil";
     }
 
@@ -55,23 +50,43 @@ public class UsuarioController {
 
 
     @GetMapping("/cadastrar")
-    public String inserir() {
+    public String paginaCadastrarEmpresa() {
         return "login/cadastrar";
     }
 
     @GetMapping("/logar")
-    public String logar() {
+    public String paginaLogar() {
         return "login/login";
     }
 
+    @GetMapping("/cadastrar-candidato")
+    public String paginaCadastrarCandidato() {
+        return "login/cadastrarCandidato";
+    }
+
     @PostMapping("/logar")
-    public String entrar(Usuario usuario, HttpServletRequest request) {
+    public String entrarEmpresa(Usuario usuario, HttpServletRequest request) {
         var reqSession = request.getSession();
 
         try {
-            var empresa = usuarioService.logarUsuario(usuario);
+            Empresa empresa = usuarioService.logarUsuario(usuario);
             System.out.println(empresa);
             reqSession.setAttribute(KEY_SESSAO_USUARIO, empresa);
+        } catch (Exception err) {
+            System.out.println(err);
+        }
+
+        return "login/login";
+    }
+
+    @PostMapping("/logar-candidato")
+    public String entrarCandidato(Usuario usuario, HttpServletRequest request) {
+        var reqSession = request.getSession();
+
+        try {
+            Candidato candidato = usuarioService.logarCandidato(usuario);
+            System.out.println(candidato);
+            reqSession.setAttribute(KEY_SESSAO_USUARIO, candidato);
         } catch (Exception err) {
             System.out.println(err);
         }
@@ -85,6 +100,15 @@ public class UsuarioController {
         var result = usuarioService.cadastrarUsuario(usuario);
         System.out.println(result);
         return "login/cadastrar";
+    }
+
+
+    @PostMapping("/cadastrar-candidato")
+    public String cadastrarCandidato(Usuario usuario) {
+        var result = usuarioService.cadastrarCandidato(usuario);
+        System.out.println(result);
+
+        return "login/cadastrarCandidato";
     }
 
     //deprecated above
@@ -106,17 +130,6 @@ public class UsuarioController {
         return "Usuarios/lista";
     }
 
-    @GetMapping("/cadastrar-candidato")
-    public String paginaCadastrarCandidato() {
-        return "login/cadastrarCandidato";
-    }
 
-    @PostMapping("/cadastrar-candidato")
-    public String cadastrarCandidato(Usuario usuario) {
-        var result = usuarioService.cadastrarCandidato(usuario);
-        System.out.println(result);
-
-        return "login/cadastrarCandidato";
-    }
 
 }

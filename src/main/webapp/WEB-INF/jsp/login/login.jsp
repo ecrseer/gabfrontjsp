@@ -22,6 +22,9 @@
     </div>
     <div class="col-12">
         <button class="btn btn-primary" type="submit">Entrar</button>
+        <button class="btn btn-primary" type="submit"
+                formmethod="post" formaction="logar-candidato">Entrar candidato
+        </button>
     </div>
 
 

@@ -16,7 +16,7 @@
             <img src="../images/${loggedUser.getLogin()}/profilePic.png"/>
 
         </div>
-        <div class="mb-3 col-6">
+        <div class="mb-3 co l-6">
             <caption>somente png</caption>
         </div>
         <div class="mb-3 col-6">
