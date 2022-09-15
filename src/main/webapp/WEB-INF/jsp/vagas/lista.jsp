@@ -36,10 +36,16 @@
                 </c:forEach>
             </td>
             <td>
-                <button type="button" class="btn btn-danger"
-                        formmethod="get" formaction="/vagas/${vaga.getIdVaga()}/deletar">
-                    Excluir
-                </button>
+                <form action="/vagas/${vaga.getIdVaga()}/candidatar" method="get">
+                    <button type="submit" class="btn btn-primary">
+                        Candidatar
+                    </button>
+                    <button type="submit" class="btn btn-danger"
+                            formmethod="get" formaction="/vagas/${vaga.getIdVaga()}/deletar">
+                        Excluir
+                    </button>
+
+                </form>
 
             </td>
         </tr>

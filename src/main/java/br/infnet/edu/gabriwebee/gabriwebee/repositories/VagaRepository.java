@@ -2,6 +2,7 @@ package br.infnet.edu.gabriwebee.gabriwebee.repositories;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface VagaRepository {
 
     @DeleteMapping("/{id}")
     public Vaga deleteVaga(@PathVariable long id);
+
+    @GetMapping("{idVaga}")
+    public Vaga getOneVaga(@PathVariable long idVaga);
 }

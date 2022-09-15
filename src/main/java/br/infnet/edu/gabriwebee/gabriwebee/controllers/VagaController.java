@@ -1,14 +1,13 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Criterio;
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.*;
 import br.infnet.edu.gabriwebee.gabriwebee.dtos.CadastraVagaDto;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.RespondeVagaRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.VagaRepository;
 import com.amazonaws.services.xray.model.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +29,9 @@ public class VagaController {
 
     @Autowired
     VagaRepository vagaRepository;
+
+    @Autowired
+    RespondeVagaRepository respondeVagaRepository;
 
     @GetMapping()
     public String listar(Model model) {
@@ -101,15 +103,26 @@ public class VagaController {
         return "redirect:/vagas";
     }
 
-    @GetMapping("/{id}")
-    public String exibirUm(@PathVariable long id) {
-        return "vagas/exibe";
+    @GetMapping("/{idVaga}/candidatar")
+    public String candidatar(@PathVariable long idVaga,
+                             HttpServletRequest request) {
+
+        //ResponseEntity<Vaga> data = vagaRepository.getOneVaga(idVaga);
+        //Vaga vaga = data.getBody();
+        HttpSession session = request.getSession();
+
+        Vaga vaga = vagaRepository.getOneVaga(idVaga);
+
+        request.setAttribute("respondeVaga", vaga);
+        Candidato candidato = (Candidato) session.getAttribute(KEY_SESSAO_USUARIO);
+
+        RespostaVaga resposta = new RespostaVaga(0,
+                vaga, candidato, "empp");
+        respondeVagaRepository.salvaResposta(resposta);
+
+        return "candidatar/responder";
     }
 
-    @GetMapping("/{id}/alterar")
-    public String alterar(@PathVariable long id) {
-        return "";
-    }
 
     @GetMapping("/{id}/deletar")
     public String deletar(@PathVariable long id) {
