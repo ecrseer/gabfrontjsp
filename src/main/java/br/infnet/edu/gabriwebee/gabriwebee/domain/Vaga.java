@@ -21,6 +21,7 @@ public class Vaga implements Serializable {
     List<Criterio> criterios;
 
     Empresa empresaFk;
+    List<RespostaVaga> respostaVagas;
 
     public Vaga(String cargo) {
         this.cargo = cargo;
