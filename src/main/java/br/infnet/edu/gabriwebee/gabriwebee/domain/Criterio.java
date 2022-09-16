@@ -19,6 +19,8 @@ public class Criterio implements Serializable {
     int peso;
     int perfilMinimo;
 
+    Vaga vagaFk;
+
     @Override
     public String toString() {
         return "Criterio{" +

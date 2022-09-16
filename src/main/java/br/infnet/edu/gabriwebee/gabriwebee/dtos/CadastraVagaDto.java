@@ -18,7 +18,7 @@ public class CadastraVagaDto implements iMyWebDto {
     int perfilMinimo;
 
     public Criterio generateCriterio() {
-        return new Criterio(criterio, peso, perfilMinimo);
+        return new Criterio(criterio, peso, perfilMinimo,null);
 
     }
 

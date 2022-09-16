@@ -1,18 +1,20 @@
 package br.infnet.edu.gabriwebee.gabriwebee.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RespostaVaga {
+
+public class RespostaVaga implements Serializable {
+
 
     private int idRespostaVaga;
 
@@ -20,6 +22,8 @@ public class RespostaVaga {
 
     private Candidato candidatoFk;
 
-    private String respostas;
+    private List<Resposta> respostas;
+
+
 
 }

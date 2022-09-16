@@ -2,6 +2,7 @@ package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.*;
 import br.infnet.edu.gabriwebee.gabriwebee.dtos.CadastraVagaDto;
+import br.infnet.edu.gabriwebee.gabriwebee.dtos.RespondeVagaDto;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.RespondeVagaRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.VagaRepository;
 import com.amazonaws.services.xray.model.Http;
@@ -26,6 +27,7 @@ import java.util.List;
 public class VagaController {
     private String KEY_SESSAO_USUARIO = new Usuario().getKey();
     private String DTO_KEY_CADASTRAVAGA = new CadastraVagaDto().getKey();
+    private String DTO_KEY_RESPONDEVAGA = new RespondeVagaDto().getKey();
 
     @Autowired
     VagaRepository vagaRepository;
@@ -116,9 +118,11 @@ public class VagaController {
         request.setAttribute("respondeVaga", vaga);
         Candidato candidato = (Candidato) session.getAttribute(KEY_SESSAO_USUARIO);
 
+
         RespostaVaga resposta = new RespostaVaga(0,
-                vaga, candidato, "empp");
-        respondeVagaRepository.salvaResposta(resposta);
+                vaga, candidato, null);
+        session.setAttribute(DTO_KEY_RESPONDEVAGA, resposta);
+
 
         return "candidatar/responder";
     }
