@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class Criterio implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    long idCriterio;
     String descricao;
 
     int peso;

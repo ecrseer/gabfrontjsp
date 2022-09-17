@@ -11,10 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,7 +102,7 @@ public class VagaController {
         return "redirect:/vagas";
     }
 
-    @GetMapping("/{idVaga}/candidatar")
+    /*@GetMapping("/{idVaga}/candidatar")
     public String candidatar(@PathVariable long idVaga,
                              HttpServletRequest request) {
 
@@ -125,6 +122,35 @@ public class VagaController {
 
 
         return "candidatar/responder";
+    }*/
+    @GetMapping("/{idVaga}/candidatar")
+    public ModelAndView candidatar(@PathVariable long idVaga,
+                                   HttpServletRequest request) {
+
+        //ResponseEntity<Vaga> data = vagaRepository.getOneVaga(idVaga);
+        //Vaga vaga = data.getBody();
+        HttpSession session = request.getSession();
+
+        Vaga vaga = vagaRepository.getOneVaga(idVaga);
+
+        request.setAttribute("respondeVaga", vaga);
+        Candidato candidato = (Candidato) session.getAttribute(KEY_SESSAO_USUARIO);
+
+
+        RespostaVaga resposta = new RespostaVaga(0,
+                vaga, candidato, null);
+        session.setAttribute(DTO_KEY_RESPONDEVAGA, resposta);
+
+
+        return new ModelAndView("candidatar/responder", DTO_KEY_RESPONDEVAGA, resposta);
+    }
+
+    @PostMapping("/{idVaga}/responder")
+    public ModelAndView responder(@ModelAttribute("RespondeVagaDto") RespostaVaga resposta) {
+
+        var resposta2 = resposta;
+        System.out.println(resposta2);
+        return new ModelAndView("candidatar/responder");
     }
 
 
