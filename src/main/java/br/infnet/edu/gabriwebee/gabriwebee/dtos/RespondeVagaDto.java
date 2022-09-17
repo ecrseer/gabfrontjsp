@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -37,6 +38,14 @@ public class RespondeVagaDto implements iMyWebDto {
             list = new ArrayList<>();
         }
         list.add(resposta);
+    }
+
+    public boolean isLast() {
+        List<Criterio> criterios = this.respostaVaga.getVagaFk()
+                .getCriterios();
+        int lastIndex = criterios.size() - 1;
+
+        return currentCriterio == lastIndex;
     }
 
     public String getKey() {

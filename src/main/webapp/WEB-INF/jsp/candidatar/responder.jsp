@@ -10,12 +10,9 @@
 
 <body>
 <%@include file="../components/menu.jsp" %>
-<h1>Respondendo a vaga ${RespondeVagaDto.getRespostaVaga().getVagaFk().getIdVaga()}</h1>
-vaga:
-<select name="vaga" id="vaga">
-    <option value="${RespondeVagaDto.getRespostaVaga()}" selected>
-        ${RespondeVagaDto.getRespostaVaga().getVagaFk().getCargo()}</option>
-</select>
+
+<c:set value="${RespondeVagaDto.getRespostaVaga().getVagaFk()}" var="vaga"/>
+<h1>Respondendo a vaga ${vaga.getIdVaga()} - ${vaga.getCargo()}</h1>
 
 <hr/>
 <form action="responder" method="post">
