@@ -139,17 +139,24 @@ public class VagaController {
 
         RespostaVaga resposta = new RespostaVaga(0,
                 vaga, candidato, null);
-        session.setAttribute(DTO_KEY_RESPONDEVAGA, resposta);
+
+        RespondeVagaDto dto = new RespondeVagaDto(resposta, 0);
+        session.setAttribute(DTO_KEY_RESPONDEVAGA, dto);
 
 
-        return new ModelAndView("candidatar/responder", DTO_KEY_RESPONDEVAGA, resposta);
+        return new ModelAndView("candidatar/responder", DTO_KEY_RESPONDEVAGA, dto);
     }
 
-    @PostMapping("/{idVaga}/responder")
-    public ModelAndView responder(@ModelAttribute("RespondeVagaDto") RespostaVaga resposta) {
+    @PostMapping("/{idVaga}/respondeCriterio")
+    public ModelAndView respondeCriterio(Resposta resposta, HttpServletRequest request) {
+        HttpSession session = request.getSession();
 
-        var resposta2 = resposta;
-        System.out.println(resposta2);
+        RespondeVagaDto dto = (RespondeVagaDto) session
+                .getAttribute(DTO_KEY_RESPONDEVAGA);
+
+        dto.setNextCriterio(resposta);
+        session.setAttribute(DTO_KEY_RESPONDEVAGA, dto);
+
         return new ModelAndView("candidatar/responder");
     }
 

@@ -10,26 +10,29 @@
 
 <body>
 <%@include file="../components/menu.jsp" %>
-<h1>Respondendo a vaga ${RespondeVagaDto.getVagaFk().getIdVaga()}</h1>
+<h1>Respondendo a vaga ${RespondeVagaDto.getRespostaVaga().getVagaFk().getIdVaga()}</h1>
 vaga:
 <select name="vaga" id="vaga">
-    <option value="${RespondeVagaDto}" selected>${RespondeVagaDto.getVagaFk().getCargo()}</option>
+    <option value="${RespondeVagaDto.getRespostaVaga()}" selected>
+        ${RespondeVagaDto.getRespostaVaga().getVagaFk().getCargo()}</option>
 </select>
 
 <hr/>
-<form:form action="responder" method="post" modelAttribute="RespondeVagaDto">
-
+<form action="responder" method="post">
     <section>
-        <c:forEach items="${RespondeVagaDto.getVagaFk().getCriterios()}" var="criterio">
-            <div>
-                <bold>${criterio.getDescricao()}</bold>
-                conhecimento:
-                <input type="text" class="text" name="${criterio.getIdCriterio()}">
-            </div>
-        </c:forEach>
+        <c:set value="${RespondeVagaDto.nextCriterio()}" var="resposta"/>
+        <div>
+            <bold>${resposta.getCriterio().getDescricao()}</bold>
+            conhecimento:
+            <input type="text" class="text" name="conhecimento">
+        </div>
+
+        <input type="submit" value="Responder proximo criterio" formmethod="post"
+               formaction="respondeCriterio"/>
+
     </section>
     <input type="submit" value="Save"/>
-</form:form>
+</form>
 
 </body>
 
