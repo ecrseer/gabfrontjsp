@@ -30,6 +30,11 @@ public class Vaga implements Serializable {
         criterios = new ArrayList<>();
     }
 
+    public Vaga(long idVaga, String cargo) {
+        this.idVaga = idVaga;
+        this.cargo = cargo;
+    }
+
 
 
     @Override

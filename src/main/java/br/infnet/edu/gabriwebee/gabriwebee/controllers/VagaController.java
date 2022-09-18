@@ -2,13 +2,11 @@ package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.*;
 import br.infnet.edu.gabriwebee.gabriwebee.dtos.CadastraVagaDto;
-import br.infnet.edu.gabriwebee.gabriwebee.dtos.RespondeVagaDto;
+import br.infnet.edu.gabriwebee.gabriwebee.dtos.RespondeVagaIteratorDto;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.RespondeVagaRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.VagaRepository;
-import com.amazonaws.services.xray.model.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,24 +18,22 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/vagas")
-@EnableFeignClients(basePackages = "br.infnet.edu.gabriwebee.gabriwebee.repositories")
-public class VagaController {
-    private String KEY_SESSAO_USUARIO = new Usuario().getKey();
+public class VagaController extends RespondeVagaController {
+
     private String DTO_KEY_CADASTRAVAGA = new CadastraVagaDto().getKey();
-    private String DTO_KEY_RESPONDEVAGA = new RespondeVagaDto().getKey();
 
-    @Autowired
-    VagaRepository vagaRepository;
-
-    @Autowired
-    RespondeVagaRepository respondeVagaRepository;
 
     @GetMapping()
     public String listar(Model model) {
-        List<Vaga> vagasList = vagaRepository.listar();
-        model.addAttribute("vagasList", vagasList);
-        model.addAttribute("vagasListSize", vagasList.size());
-        System.out.println(vagasList);
+        List<Vaga> vagasList = null;
+        try {
+            vagasList = vagaRepository.listar();
+            model.addAttribute("vagasList", vagasList);
+            model.addAttribute("vagasListSize", vagasList.size());
+            System.out.println(vagasList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "vagas/lista";
     }
@@ -97,75 +93,11 @@ public class VagaController {
             List<Vaga> vagasList = vagaRepository.listar();
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return "redirect:/vagas";
     }
 
-    /*@GetMapping("/{idVaga}/candidatar")
-    public String candidatar(@PathVariable long idVaga,
-                             HttpServletRequest request) {
-
-        //ResponseEntity<Vaga> data = vagaRepository.getOneVaga(idVaga);
-        //Vaga vaga = data.getBody();
-        HttpSession session = request.getSession();
-
-        Vaga vaga = vagaRepository.getOneVaga(idVaga);
-
-        request.setAttribute("respondeVaga", vaga);
-        Candidato candidato = (Candidato) session.getAttribute(KEY_SESSAO_USUARIO);
-
-
-        RespostaVaga resposta = new RespostaVaga(0,
-                vaga, candidato, null);
-        session.setAttribute(DTO_KEY_RESPONDEVAGA, resposta);
-
-
-        return "candidatar/responder";
-    }*/
-    @GetMapping("/{idVaga}/candidatar")
-    public ModelAndView candidatar(@PathVariable long idVaga,
-                                   HttpServletRequest request) {
-
-        //ResponseEntity<Vaga> data = vagaRepository.getOneVaga(idVaga);
-        //Vaga vaga = data.getBody();
-        HttpSession session = request.getSession();
-
-        Vaga vaga = vagaRepository.getOneVaga(idVaga);
-
-        request.setAttribute("respondeVaga", vaga);
-        Candidato candidato = (Candidato) session.getAttribute(KEY_SESSAO_USUARIO);
-
-
-        RespostaVaga resposta = new RespostaVaga(0,
-                vaga, candidato, null);
-
-        RespondeVagaDto dto = new RespondeVagaDto(resposta, 0);
-        session.setAttribute(DTO_KEY_RESPONDEVAGA, dto);
-
-
-        return new ModelAndView("candidatar/responder", DTO_KEY_RESPONDEVAGA, dto);
-    }
-
-    @PostMapping("/{idVaga}/respondeCriterio")
-    public ModelAndView respondeCriterio(Resposta resposta, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-
-        RespondeVagaDto dto = (RespondeVagaDto) session
-                .getAttribute(DTO_KEY_RESPONDEVAGA);
-
-        dto.setNextCriterio(resposta);
-        session.setAttribute(DTO_KEY_RESPONDEVAGA, dto);
-
-        return new ModelAndView("candidatar/responder");
-    }
-
-
-    @GetMapping("/{id}/deletar")
-    public String deletar(@PathVariable long id) {
-        Vaga vaga = vagaRepository.deleteVaga(id);
-        return "vagas/lista";
-    }
 
     @GetMapping("/deslogar")
     public String deslogar(HttpServletRequest request) {
@@ -173,7 +105,7 @@ public class VagaController {
         HttpSession session = request.getSession();
         session.setAttribute(DTO_KEY_CADASTRAVAGA, null);
         session.setAttribute(KEY_SESSAO_USUARIO, null);
-        return ":redirect:/";
+        return "login/cadastrarCandidato";
     }
 
 }

@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface RespondeVagaRepository {
 
     @PostMapping("/responder")
-    public ResponseEntity<RespostaVaga> salvaResposta(
+    public RespostaVaga salvaResposta(
             @RequestBody RespostaVaga resposta);
 }

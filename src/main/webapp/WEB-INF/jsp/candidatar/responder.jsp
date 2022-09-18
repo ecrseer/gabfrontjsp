@@ -15,22 +15,35 @@
 <h1>Respondendo a vaga ${vaga.getIdVaga()} - ${vaga.getCargo()}</h1>
 
 <hr/>
-<form action="responder" method="post">
-    <section>
-        <c:set value="${RespondeVagaDto.nextCriterio()}" var="resposta"/>
-        <div>
-            <bold>${resposta.getCriterio().getDescricao()}</bold>
-            conhecimento:
-            <input type="text" class="text" name="conhecimento">
-        </div>
 
-        <input type="submit" value="Responder proximo criterio" formmethod="post"
-               formaction="respondeCriterio"/>
+<c:if test="${RespondeVagaDto!=null}">
 
-    </section>
-    <input type="submit" value="Save"/>
-</form>
+    <form action="responder" method="post">
+        <c:if test="${RespondeVagaDto.nextCriterio()!=null}">
+            <section>
+                <c:set value="${RespondeVagaDto.nextCriterio()}" var="resposta"/>
+                <div>
+                    <bold>${resposta.getCriterio().getDescricao()}</bold>
+                    conhecimento:
+                    <input type="text" class="text" name="conhecimento">
+                </div>
 
+                <c:if test="${RespondeVagaDto.getIsLast()==false}">
+                    <input type="submit" value="Responder proximo criterio" formmethod="post"
+                           formaction="respondeCriterio"/>
+                </c:if>
+
+            </section>
+        </c:if>
+        <c:if test="${RespondeVagaDto.getIsLast()==true}">
+            <input type="submit" value="Se candidatar a vaga"/>
+        </c:if>
+
+    </form>
+</c:if>
+<c:if test="${RespondeVagaDto==null}">
+    <h4>${result}</h4>
+</c:if>
 </body>
 
 </html>
