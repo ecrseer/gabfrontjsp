@@ -23,7 +23,7 @@
             <section>
                 <c:set value="${RespondeVagaDto.nextCriterio()}" var="resposta"/>
                 <div>
-                    <bold>${resposta.getCriterio().getDescricao()}</bold>
+                    <bold>${RespondeVagaDto.findCriterioById(resposta.getCriterioFk()).getDescricao()}</bold>
                     conhecimento:
                     <input type="text" class="text" name="conhecimento">
                 </div>

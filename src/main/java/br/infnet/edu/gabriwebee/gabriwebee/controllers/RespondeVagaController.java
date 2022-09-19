@@ -71,8 +71,8 @@ public class RespondeVagaController {
         try {
             RespondeVagaIteratorDto dto = this.respondeConhecimento(resposta, request);
             //dto.bindFkRespostas();
-
             RespostaVaga respostaAvaga = dto.getRespostaVaga();
+            
             var saveResult = respondeVagaRepository.salvaResposta(respostaAvaga);
             //var saveResult = respondeVagaRepository.salvaResposta(respostaAvaga.getRespostas().get(0));
             if (saveResult != null) {

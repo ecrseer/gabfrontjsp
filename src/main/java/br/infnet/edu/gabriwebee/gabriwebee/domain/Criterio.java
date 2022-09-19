@@ -3,14 +3,17 @@ package br.infnet.edu.gabriwebee.gabriwebee.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Criterio implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +24,7 @@ public class Criterio implements Serializable {
     int perfilMinimo;
 
     Vaga vagaFk;
+
 
     @Override
     public String toString() {

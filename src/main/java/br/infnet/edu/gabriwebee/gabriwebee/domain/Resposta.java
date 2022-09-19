@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Resposta {
 
     long idResposta;
-    Criterio criterio;
+    long criterioFk;
 
     private int conhecimento;
     RespostaVaga respostaCriterioFk;

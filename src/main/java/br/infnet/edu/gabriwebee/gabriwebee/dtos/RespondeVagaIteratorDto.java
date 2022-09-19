@@ -46,7 +46,20 @@ public class RespondeVagaIteratorDto implements iMyWebDto {
     public Resposta nextCriterio() {
         Criterio criterio = this.getListaCriterios().get(currentCriterio);
 
-        return new Resposta(0, criterio, 0, null);
+        return new Resposta(0, criterio.getIdCriterio(), 0, null);
+    }
+
+    public Criterio findCriterioById(long idCriterio) {
+        Criterio founded = new Criterio();
+
+        for (Criterio criterio :
+                getListaCriterios()) {
+            if (criterio.getIdCriterio() == idCriterio) {
+                founded = criterio;
+            }
+        }
+        return founded;
+
     }
 
     public void setNextCriterio(Resposta resposta) {
@@ -56,7 +69,7 @@ public class RespondeVagaIteratorDto implements iMyWebDto {
             list = this.respostaVaga.getRespostas();
         }
         Criterio criterio = this.getListaCriterios().get(currentCriterio);
-        resposta.setCriterio(criterio);
+        resposta.setCriterioFk(criterio.getIdCriterio());
         list.add(resposta);
         currentCriterio++;
         setLast();

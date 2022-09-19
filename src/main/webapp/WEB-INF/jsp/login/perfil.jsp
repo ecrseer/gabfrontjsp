@@ -29,7 +29,7 @@
     </form>
 </div>
 <div class="ma-3 col-6">
-    <form action="editSenha">
+    <%--<form action="editSenha">
 
         <div class="mb-3 col-6">
             <label for="password" class="form-label">Senha</label>
@@ -44,7 +44,8 @@
         </div>
 
 
-    </form>
+    </form>--%>
+
 </div>
 </body>
 
