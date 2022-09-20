@@ -5,7 +5,6 @@ import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.CandidatoRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.UsuarioRepository;
-import br.infnet.edu.gabriwebee.gabriwebee.services.AmazonService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +42,7 @@ public class UsuarioService {
         return "";
     }
 
-    public void loadUser(Usuario usuario) {
+    public void carregaPerfilImagem(Usuario usuario) {
 
         //temp
         String extension = "png";

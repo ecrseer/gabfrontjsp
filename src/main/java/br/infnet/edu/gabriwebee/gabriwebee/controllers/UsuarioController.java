@@ -3,6 +3,7 @@ package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Candidato;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
+import br.infnet.edu.gabriwebee.gabriwebee.repositories.RespondeVagaRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -22,12 +23,17 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    @Autowired
+    RespondeVagaRepository respondeVagaRepository;
+
     @GetMapping("/perfil")
     public String perfil(Model model, HttpServletRequest request) {
         var session = request.getSession();
         try {
             Usuario usuario = (Usuario) session.getAttribute("loggedUser");
-            usuarioService.loadUser(usuario);
+            usuarioService.carregaPerfilImagem(usuario);
+
+            respondeVagaRepository.getVagasRespondidas(usuario.getIdUsuario());
         } catch (Exception excep) {
             excep.printStackTrace();
         }
@@ -112,26 +118,6 @@ public class UsuarioController {
 
         return "login/cadastrarCandidato";
     }
-
-    //deprecated above
-    @GetMapping()
-    public String listar(Model model) {
-
-        return "Usuarios/lista";
-    }
-
-    @GetMapping("/{id}")
-    public String exibirUm(@PathVariable long id) {
-        return "Usuarios/exibe";
-    }
-
-
-    @GetMapping("/{id}/deletar")
-    public String deletar(@PathVariable long id) {
-        // Usuario Usuario = UsuarioService.deleteUsuario(id);
-        return "Usuarios/lista";
-    }
-
 
 
 }

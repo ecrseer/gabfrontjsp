@@ -18,6 +18,6 @@ public interface RespondeVagaRepository {
     public RespostaVaga salvaResposta(
             @RequestBody RespostaVaga resposta);
 
-    @GetMapping("/respostas/${idCandidato}")
+    @GetMapping("/respostas/{idCandidato}")
     public List<RespostaVaga> getVagasRespondidas(@PathVariable long idCandidato);
 }
