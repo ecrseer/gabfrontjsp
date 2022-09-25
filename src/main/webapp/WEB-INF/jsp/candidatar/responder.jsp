@@ -41,6 +41,9 @@
 
     </form>
 </c:if>
+<c:if test="${result!=null}">
+    <h4>${result}</h4>
+</c:if>
 <c:if test="${RespondeVagaDto==null}">
     <h4>${result}</h4>
 </c:if>

@@ -1,6 +1,7 @@
 package br.infnet.edu.gabriwebee.gabriwebee.repositories;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.RespostaVaga;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.Vaga;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,5 +20,5 @@ public interface RespondeVagaRepository {
             @RequestBody RespostaVaga resposta);
 
     @GetMapping("/respostas/{idCandidato}")
-    public ResponseEntity<List<RespostaVaga>> getVagasRespondidas(@PathVariable long idCandidato);
+    public List<RespostaVaga> getVagasRespondidas(@PathVariable long idCandidato);
 }

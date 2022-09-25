@@ -1,9 +1,6 @@
 package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Candidato;
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
-import br.infnet.edu.gabriwebee.gabriwebee.domain.RespostaVaga;
-import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.*;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.RespondeVagaRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +33,10 @@ public class UsuarioController {
             usuarioService.carregaPerfilImagem(usuario);
 
             List<RespostaVaga> respostas = respondeVagaRepository
-                    .getVagasRespondidas(usuario.getIdUsuario()).getBody();
-            String primeiroCargo = respostas.get(0).getVagaFk().getCargo();
-            System.out.println(primeiroCargo);
+                    .getVagasRespondidas(usuario.getIdUsuario());
+
+            System.out.println(respostas);
+            request.setAttribute("respostas", respostas);
 
 
         } catch (Exception excep) {
