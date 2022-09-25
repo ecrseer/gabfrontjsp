@@ -16,17 +16,13 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "usuario")
 public class Usuario implements Serializable, iMyWebDto {
     private static final long serialVersionUID = 1L;
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idUsuario;
     private String login;
     private String password;
-    private String profilePic;
     String tipo;
 
 

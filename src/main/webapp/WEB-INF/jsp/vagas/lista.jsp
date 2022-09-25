@@ -37,14 +37,17 @@
             </td>
             <td>
                 <form action="/vagas/${vaga.getIdVaga()}/candidatar" method="get">
-                    <button type="submit" class="btn btn-primary">
-                        Candidatar
-                    </button>
-                    <button type="submit" class="btn btn-danger"
-                            formmethod="get" formaction="/vagas/${vaga.getIdVaga()}/deletar">
-                        Excluir
-                    </button>
-
+                    <c:if test="${loggedUser!=null && loggedUser.getTipo()=='C'}">
+                        <button type="submit" class="btn btn-primary">
+                            Candidatar
+                        </button>
+                    </c:if>
+                    <c:if test="${loggedUser!=null && loggedUser.getTipo()=='E'}">
+                        <%--<button type="submit" class="btn btn-danger"
+                                formmethod="get" formaction="/vagas/${vaga.getIdVaga()}/deletar">
+                            Excluir
+                        </button>--%>
+                    </c:if>
                 </form>
 
             </td>

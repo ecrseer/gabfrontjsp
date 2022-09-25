@@ -24,6 +24,12 @@
         <button class="btn btn-primary" type="submit">Cadastrar</button>
     </div>
 </form>
+<c:if test="${sucesso!=null}">
+    <h3>Candidato cadastrado!</h3>
+</c:if>
+<c:if test="${falha!=null}">
+    <h3>Nao foi possivel concluir o cadastro!</h3>
+</c:if>
 </body>
 
 </html>

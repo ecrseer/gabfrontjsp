@@ -20,8 +20,8 @@ public class Criterio implements Serializable {
     long idCriterio;
     String descricao;
 
-    int peso;
     int perfilMinimo;
+    int peso;
 
     Vaga vagaFk;
 

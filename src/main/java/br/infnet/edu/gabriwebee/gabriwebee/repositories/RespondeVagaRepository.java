@@ -19,5 +19,5 @@ public interface RespondeVagaRepository {
             @RequestBody RespostaVaga resposta);
 
     @GetMapping("/respostas/{idCandidato}")
-    public List<RespostaVaga> getVagasRespondidas(@PathVariable long idCandidato);
+    public ResponseEntity<List<RespostaVaga>> getVagasRespondidas(@PathVariable long idCandidato);
 }

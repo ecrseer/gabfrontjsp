@@ -12,9 +12,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class RespostaVaga implements Serializable {
-
+    private static final long serialVersionUID = 1L;
 
     private int idRespostaVaga;
 
@@ -24,6 +23,13 @@ public class RespostaVaga implements Serializable {
 
     private List<Resposta> respostas;
 
-
-
+    @Override
+    public String toString() {
+        return "RespostaVaga{" +
+                "idRespostaVaga=" + idRespostaVaga +
+                ", vagaFk=" + vagaFk +
+                ", candidatoFk=" + candidatoFk +
+                ", respostas=" + respostas +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package br.infnet.edu.gabriwebee.gabriwebee.controllers;
 
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Candidato;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Empresa;
+import br.infnet.edu.gabriwebee.gabriwebee.domain.RespostaVaga;
 import br.infnet.edu.gabriwebee.gabriwebee.domain.Usuario;
 import br.infnet.edu.gabriwebee.gabriwebee.repositories.RespondeVagaRepository;
 import br.infnet.edu.gabriwebee.gabriwebee.services.UsuarioService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/usuario")
@@ -33,7 +35,12 @@ public class UsuarioController {
             Usuario usuario = (Usuario) session.getAttribute("loggedUser");
             usuarioService.carregaPerfilImagem(usuario);
 
-            respondeVagaRepository.getVagasRespondidas(usuario.getIdUsuario());
+            List<RespostaVaga> respostas = respondeVagaRepository
+                    .getVagasRespondidas(usuario.getIdUsuario()).getBody();
+            String primeiroCargo = respostas.get(0).getVagaFk().getCargo();
+            System.out.println(primeiroCargo);
+
+
         } catch (Exception excep) {
             excep.printStackTrace();
         }
@@ -78,7 +85,9 @@ public class UsuarioController {
             Empresa empresa = usuarioService.logarUsuario(usuario);
             System.out.println(empresa);
             reqSession.setAttribute(KEY_SESSAO_USUARIO, empresa);
+            request.setAttribute("sucesso", empresa);
         } catch (Exception err) {
+            request.setAttribute("falha", err);
             System.out.println(err);
         }
 
@@ -94,7 +103,9 @@ public class UsuarioController {
             Candidato candidato = usuarioService.logarCandidato(usuario);
             System.out.println(candidato);
             reqSession.setAttribute(KEY_SESSAO_USUARIO, candidato);
+            request.setAttribute("sucesso", candidato);
         } catch (Exception err) {
+            request.setAttribute("falha", err);
             System.out.println(err);
         }
 
@@ -102,8 +113,15 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar")
-    public String cadastrarEmpresa(Usuario usuario) {
-        var result = usuarioService.cadastrarUsuario(usuario);
+    public String cadastrarEmpresa(Usuario usuario, HttpServletRequest request) {
+        Usuario result = null;
+        try {
+            result = usuarioService.cadastrarUsuario(usuario);
+            request.setAttribute("sucesso", result);
+        } catch (Exception e) {
+            request.setAttribute("falha", result);
+            e.printStackTrace();
+        }
 
         System.out.println(result);
         return "login/cadastrar";
@@ -111,9 +129,16 @@ public class UsuarioController {
 
 
     @PostMapping("/cadastrar-candidato")
-    public String cadastrarCandidato(Candidato usuario) {
+    public String cadastrarCandidato(Candidato usuario, HttpServletRequest request) {
 
-        var result = usuarioService.cadastrarCandidato(usuario);
+        Candidato result = null;
+        try {
+            result = usuarioService.cadastrarCandidato(usuario);
+            request.setAttribute("sucesso", result);
+        } catch (Exception e) {
+            request.setAttribute("falha", result);
+            e.printStackTrace();
+        }
         System.out.println(result);
 
         return "login/cadastrarCandidato";
