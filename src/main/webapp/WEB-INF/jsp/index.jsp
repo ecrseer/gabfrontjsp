@@ -2,16 +2,14 @@
 <html lang="en">
 
 <head>
-    <%@include file ="./components/bootstrap.jsp" %>
+    <%@include file="./components/bootstrap.jsp" %>
     <title>Document</title>
 </head>
 
 <body>
-    <%@include file ="./components/menu.jsp" %>
-    <h1>Entre na sua pagina</h1>
-    <form action="login" method="post">
-        <input type="text" class="text">
-    </form>
+<%@include file="./components/menu.jsp" %>
+<h1>Bem vindo a ventura HR - vagas</h1>
+
 </body>
 
 </html>
